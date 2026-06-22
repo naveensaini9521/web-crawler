@@ -1,0 +1,74 @@
+{% extends "admin/layout.html" %}
+{% block content %}
+<form id="searchForm" action="/search/search_page" method="post" enctype="application/x-www-form-urlencoded">
+
+<div class="container mt-5">
+    <h1 class="mb-4">Search Page</h1>
+    <div class="form-group">
+        <input type="text" id="searchInput" class="form-control" placeholder="Search..." autocomplete="autocomplete">
+        <button type="submit" id="searchButton" class="btn btn-primary mb-3">Search</button>
+    </div>
+    <div id="search-results" class="mt-4"></div>
+    <ul id="resultsList" class="list-group"></ul>
+
+<!--    <ul>-->
+<!--        {% for event in events -%}-->
+<!--            <li>{{ event.title }}</li>-->
+<!--        {% endfor -%}-->
+<!--    </ul>-->
+</div>
+</form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+      $SCRIPT_ROOT = {{ request.script_root|tojson }};
+    $(document).ready(function() {
+        $('#searchInput').keyup(function() {
+            let value = this.value;
+            $.getJSON($SCRIPT_ROOT + '/search_result', {
+                query: value
+              }, function(data) {
+                this.value = data[0]['data'];
+              };
+
+
+<!--//-->
+<!--    $(document).ready(function() {-->
+<!--    $('#searchForm').on(submit, function(event) {-->
+<!--        event.preventDefault();-->
+<!--        let query = $('#searchInput').val();-->
+<!--        search(query);-->
+<!--    });-->
+
+<!--    function search(query, page) {-->
+<!--        $.ajax({-->
+<!--            url: '/search_result',-->
+<!--            method: 'GET',-->
+<!--            data: { query: query, page: page },-->
+<!--            dataType: 'json',-->
+<!--            success: function(response) {-->
+<!--                displayResults(response.data);-->
+<!--                renderPagination(response.totalPages, page, query);-->
+<!--            },-->
+<!--            error: function(xhr, status, error) {-->
+<!--                console.error('AJAX Error: ' + status + ', ' + error);-->
+<!--            }-->
+<!--        });-->
+<!--    }-->
+<!--    function displayResults(results) {-->
+<!--        var resultList = $('#resultsList');-->
+<!--        resultList.empty();-->
+<!--        if (results.length > 0) {-->
+<!--            $.each(results, function(index, item) {-->
+<!--                resultList.append($('<li>').addClass('list-group-item').text(item));-->
+<!--            });-->
+<!--        } else {-->
+<!--            resultList.append($('<li>').addClass('list-group-item').text('No results found.'));-->
+<!--        }-->
+<!--    }-->
+
+
+//
+    }
+});
+</script>
+{% endblock %}

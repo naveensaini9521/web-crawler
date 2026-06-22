@@ -1,0 +1,60 @@
+{% extends "admin/layout.html" %}
+{% block content %}
+<div class="pagetitle">
+      <h1>Crawler data</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+          <li class="breadcrumb-item">Crawler data</li>
+          <li class="breadcrumb-item active">List</li>
+       </ol>
+      </nav>
+    </div><!-- End Page Title -->
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Crawler data List</h5>
+              <table class="table table-stripped">
+                <thead class="thead-dark">
+                <tr>
+                    <tr>
+                        <th>ID</th>
+                        <th>Timestamp</th> <!-- Add a column header for timestamp -->
+                        <th>Actions</th> <!-- Column for actions -->
+                    </tr>
+                     <td>
+                         Crawler Data
+                     </td>
+                     <!-- Add a column for timestamp -->
+                     <td>
+
+                     </td>
+                 </tr>
+                </thead>
+                <tbody>
+                {% for crawler in data %}
+               <tr>
+                 <td>{{ crawler.id }}</td>
+                 <td></td>  <!-- Display the timestamp -->
+                 <td><a href="/crawler/{{ crawler.crawler_id }}/data/{{ crawler.id }}/view" class="bi bi-bell" >
+                   </a>
+                 </td>
+
+               </tr>
+              {% endfor %}
+                </tbody>
+              </table>
+{{ pagination.links }}
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+{% endblock %}

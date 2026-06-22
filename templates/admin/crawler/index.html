@@ -1,0 +1,88 @@
+{% extends 'create.html' %}
+
+{% block content %}
+    <h1>{% block title %} Add a New Course {% endblock %}</h1>
+
+    <form method="POST" action="/">
+        {{ form.csrf_token }}
+        <p>
+            {{ form.name.label }}
+            {{ form.name.(size=20) }}
+        </p>
+
+        {% if form.name.errors %}
+            <ul class="errors">
+                {% for error in form.name.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <p>
+            {{ form.url.label }}
+        </p>
+        {{ form.url(rows=10, cols=50) }}
+
+        {% if form.url.errors %}
+            <ul class="errors">
+                {% for error in form.url.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <p>
+            {{ form.start_dateTime.label }}
+            {{ form.start_dateTime() }}
+        </p>
+
+        {% if form.start_dateTime.errors %}
+            <ul class="errors">
+                {% for error in form.start_dateTime.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+         <p>
+            {{ form.end_dateTime.label }}
+            {{ form.end_dateTime() }}
+        </p>
+
+        {% if form.end_dateTime.errors %}
+            <ul class="errors">
+                {% for error in form.end_dateTime.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <p>
+            {{ form.frequency() }} {{ form.frequency.label }}
+        </p>
+
+        {% if form.frequency.errors %}
+            <ul class="errors">
+                {% for error in form.frequency.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <p>
+            {{ form.recursive.label }}
+            {{ form.recursive() }}
+        </p>
+
+        {% if form.recursive.errors %}
+            <ul class="errors">
+                {% for error in form.recursive.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <p>
+            <input type="submit" value="Add">
+        </p>
+    </form>
+
+{% endblock %}

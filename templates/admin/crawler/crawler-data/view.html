@@ -1,0 +1,57 @@
+{% extends "admin/layout.html" %}
+{% block content %}
+    <div class="container">
+        <h1>Crawler Data Detail</h1>
+        <div class="row">
+              <div class="col-md-6">
+                  <table>
+                        <tr>
+                            <th>ID</th>
+                            <td>{{ data.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Crawler ID</th>
+                            <td>{{ data.crawler_id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Field 1</th>
+                            <td>{{ data.field1 }}</td>
+                        </tr>
+                        <tr>
+                            <th>Field 2</th>
+                            <td>{{ data.field2 }}</td>
+                        </tr>
+                        <tr>
+                            <th>Timestamp</th> <!-- Add a row for the timestamp -->
+                            <td>{{ data.timestamp }}</td>
+                        </tr>
+                    <!-- Add more fields as necessary -->
+                </table>
+              </div>
+        </div>
+
+        <div class="col-md-6">
+            <div id="word_cloud" style="width: 550px; height: 350px;"></div>
+        </div>
+        <a href="{{ url_for('admin_crawler_data.crawler_data', crawler_id=data.crawler_id) }}">Back to Crawler Data List</a>
+    </div>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/jqcloud/1.0.4/jqcloud.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqcloud/1.0.4/jqcloud.min.js"></script>
+
+<script type="text/javascript">
+
+     $(document).ready(function () {
+
+       var words_data = $.parseJSON({{ words_json }});
+       // we will build a word cloud into our div with id=word_cloud
+       // we have to specify width and height of the word_cloud chart
+       $('#word_cloud').jQCloud(words_data, {
+           width: 800,
+           height: 600
+       });
+
+        });
+</script>
+{% endblock %}

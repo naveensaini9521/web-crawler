@@ -1,0 +1,15 @@
+{% extends "admin/layout.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h3>Crawled Data Result</h3>
+    <p><strong>Crawler ID:</strong> {{ result.crawler_id }}</p>
+    <p><strong>Timestamp:</strong> {{ result.timestamp }}</p>
+    <p><strong>Raw Data:</strong> {{ result.data }}</p>
+
+    <hr>
+    <h5>Word Cloud:</h5>
+    <img src="{{ wc_image }}" alt="Word Cloud" class="img-fluid border rounded shadow">
+<!--    <a href="{{ url_for('admin_crawler_data.crawl_instantly') }}" class="btn btn-secondary mt-3">← Back to Instant Crawl</a>-->
+        <a href="{{ url_for('admin_crawler_bp.crawler_create') }}" class="btn btn-secondary mt-3">← Back</a>
+</div>
+{% endblock %}

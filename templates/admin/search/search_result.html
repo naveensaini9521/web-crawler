@@ -1,0 +1,77 @@
+{% extends "admin/layout.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Search Results <span id="searchQuery">{{ query }}</span></h1>
+    <ul id="resultsList" class="list-group">{% for result in results %}
+            <li>
+                <a href="{{ result.url }}">{{ result.data }}</a>
+            </li>
+    {% else %}
+    </ul>
+    <nav id="pagination" aria-label="Search results pagination">
+        <ul class="pagination justify-content-center mt-4">
+            {% for page in range(1, totalPages + 1) %}
+                <li class="page-item {% if page == currentPage %}active{% endif %}">
+                    <a class="page-link" href="#" onclick="search('{{ query }}', {{ page }}); return false;">{{ page }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </nav>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{{ url_for('static', filename='assets/js/scripts.js') }}"></script>
+<script>
+$(document).ready(function() {
+    var currentPage = {{ currentPage }};
+    var query = "{{ query }}";
+
+    // Initialize page with initial search results
+    search(query, currentPage);
+
+    function search(query, page) {
+        $.ajax({
+            url: '/search_result',
+            method: 'GET',
+            data: {
+                query: query,
+                page: page },
+            dataType: 'json',
+            success: function(response) {
+                displayResults(response.data);
+                renderPagination(response.totalPages, page, query);
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error: ' + status, error);
+            }
+        });
+    }
+
+    function displayResults(results) {
+        var resultList = $('#resultsList');
+        resultList.empty();
+        if (results.length > 0) {
+            $.each(results, function(index, item) {
+                var listItem = $('<li>').addClass('list-group-item').text(item.title);
+                resultList.append(listItem);
+            });
+        }
+        else {
+            resultList.append($('<li>').addClass('list-group-item').text('No results found.'));
+        }
+        function renderPagination(totalPages, currentPage, query) {
+        var pagination = $('#pagination ul');
+        pagination.empty();
+        for (var page = 1; page <= totalPages; page++) {
+            var pageItem = $('<li>').addClass('page-item').toggleClass('active', page == currentPage);
+            var pageLink = $('<a>').addClass('page-link').attr('href', '#').text(page).click(function() {
+                search(query, $(this).text());
+                return false;
+            });
+            pageItem.append(pageLink);
+            pagination.append(pageItem);
+        }
+    }
+});
+</script>
+
+{% endblock %}

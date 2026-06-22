@@ -1,0 +1,30 @@
+{% extends "admin/layout.html" %}
+{% block content %}
+<div class="pagetitle">
+    <h1>Crawler Detail</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+            <li class="breadcrumb-item"><a href="/crawler/list">Crawler</a></li>
+            <li class="breadcrumb-item active">Crawl Instantly</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+<section class="section">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Crawl Instantly</h5>
+                    <form method="POST" action="{{ url_for('admin_bp.crawl_instantly', crawler_id=crawler.id) }}">
+                        <p>You are about to initiate an instant crawl for <strong>{{ crawler.name }}</strong>.</p>
+                        <p>This action may take some time depending on the crawler's configuration and the amount of data.</p>
+                        <button type="submit" class="btn btn-primary">Confirm and Crawl Instantly</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

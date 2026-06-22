@@ -1,0 +1,34 @@
+{% extends "admin/layout.html" %}
+{% block content %}
+<!--    {% with messages = get_flashed_messages() %}-->
+<!--        {% if messages %}-->
+<!--            <div class="notification is-danger" style="color:red">-->
+<!--                {{ messages[0] }}-->
+<!--            </div>-->
+<!--        {% endif %}-->
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+<!--    <form action="/crawler/crawl_instantly" method="post" enctype="application/x-www-form-urlencoded">-->
+        <form action="{{ url_for('admin_crawler_data.crawl_instantly') }}" method="post" enctype="application/x-www-form-urlencoded">
+
+        {% if message is defined and message %}
+            <div class="alert alert-warning">{{ message }}</div>
+        {% endif %}
+        <div class="form-group">
+            <label for="crawler_id">Crawler ID:</label>
+            <input type="number" class="form-control" id="crawler_id" name="crawler_id" placeholder="Enter Crawler ID">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        </div>
+        <button type="submit" class="btn btn-primary">Crawl Instantly</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "admin/layout.html" %}
+{% block content %}
+<div id="wordcloud" style="width: 500px; height: 350px;">
+    <h1>Word Cloud for Crawler {{ crawler_id }}</h1>
+    <img src="{{ url_for('admin_crawler_data_bp.wordcloud', crawler_id=crawler_id) }}" alt="Word Cloud">
+</div>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- jQCloud -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqcloud/1.0.4/jqcloud.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqcloud/1.0.4/jqcloud.min.js"></script>
+
+
+   <script>
+        $(document).ready(function() {
+            // Fetch the word cloud data from the Flask endpoint
+            $.getJSON('/wordcloud-data', function(data) {
+                $('#wordcloud').jQCloud(data);
+            });
+        });
+    </script>
+{% endblock %}
