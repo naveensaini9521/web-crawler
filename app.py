@@ -9,6 +9,8 @@ from v1.admin.crawler.crawler_data import admin_crawler_data_bp
 from flask_wtf.csrf import CSRFProtect
 from db import db
 from models import User
+from flask import jsonify
+from datetime import datetime
 
 # app initialise
 app = Flask(__name__)
@@ -37,7 +39,13 @@ app.register_blueprint(admin_search_bp, url_prefix='/')
 app.register_blueprint(admin_crawler_data_bp, url_prefix='/')
 
 
-
+@app.route('/health')
+def health_check():
+    return jsonify({
+        "status": "healthy",
+        "timestamp": datetime.utcnow().isoformat(),
+        "service": "web-crawler"
+    }), 200
 @login_manager.user_loader
 def load_user(user_id):
     # since the user_id is just the primary key of our user table, use it in the query for the user
