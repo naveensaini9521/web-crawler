@@ -56,9 +56,6 @@ def load_user(user_id):
 
 if __name__ == '__main__':
     # run application
-    # qrcode_value = input('Enter QR code value: ')
-    # print(utils.generate_qr_code(qrcode_value))
-    # Create database tables based in the models
     with app.app_context():
         db.create_all()
-    app.run(host='0.0.0.0', port=5001)
+    app.run(host='0.0.0.0', port=8000)
